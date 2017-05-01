@@ -1,0 +1,26 @@
+#Varengold
+cfg javascript=true
+
+#Login
+open "http://www.varengold.de/de/kontakt/kundenservice-fuer-privatkunden/vielen-dank/login-online-banking/"
+assertExists "Konnte die Login-Webseite nicht laden!" getbyxpath("//h1[text()[contains(.,'Online banking login')]]")
+
+set getbyxpath("//input[contains(@id,'benutzerkennung')]") to value "${userid}"
+set getbyxpath("//input[contains(@id,'pass')]") to value "${pwd}"
+click getbyxpath("//input[contains(@id,'submitButtonId')]")
+assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Timeout at')]]")
+
+# Account Übersicht
+click getbyxpath("//a[contains(@href,'accountlist')]")
+extract getbyxpath("//table[contains(@class,'dataTableAccountList')]/tbody/tr[.//td/div[contains(text(),'${nummer}')]]") split by getbyxpath(".//td/div/span")
+
+# Umsätze
+click getbyxpath("//a[contains(@href,'turnoverlist')]")
+click getbyxpath("//input[contains(@id,'showFilterButtonId')]")
+set getbyxpath("//select[contains(@id,'periodDayId')]") to value "180"
+click getbyxpath("//input[contains(@id,'refreshButtonId')]")
+extract getbyxpath("//table[@class='dataTable']/tbody/tr") split by getbyxpath(".//td/div")
+
+# Logout
+click getbyxpath("//a[contains(@href,'logout')]")
+assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'You have successfully logged out.')]]")

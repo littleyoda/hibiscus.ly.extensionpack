@@ -1,0 +1,22 @@
+engine phantomjsdriver
+cfg language=de-DE
+
+# Login
+open "https://www.shoop.de/"
+click getbyxpath("//a[text()[contains(.,'Einloggen')]]")
+set getbyid("user_email") to value "${userid}"
+set getbyid("user_pass") to value "${pwd}"
+click getbyxpath("//button[text()[contains(.,'Login')]]")
+
+# CSV Download
+#click getbyxpath("//a[text()[contains(.,'Aktivitäten')]]")
+#click getbyxpath("//a[text()[contains(.,'Zeige alle Transaktionen')]]")
+downloadfromurl https://www.shoop.de/my/transactions.php?csv=true
+
+
+# Extract Saldo
+extract getbyxpath("//p[@id='my_balance']") split by getbyxpath(".")
+
+# Logout
+click getbyxpath("//a[text()[contains(.,'Ausloggen')]]")
+assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Logoutvorgang abgeschlossen')]]")

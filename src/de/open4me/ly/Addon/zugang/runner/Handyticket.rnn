@@ -1,0 +1,23 @@
+cfg javascript=true
+open "https://handyticket.de/"
+open "https://handyticket.de/portals/web/nutzer/system/login.html?proc=neutral"
+assertExists "Loginwebseite nicht gefunden!" getbyxpath("//*[text()[contains(.,'PIN vergessen')]]")
+
+# Login
+set getbyid("EF_TELNR") to value "${userid}"
+set getbyid("EF_PIN") to value "${pwd}"
+click getbyid("SF_LOGIN")
+assertExists "Login fehlgeschlagen!" getbytext("Meine Tickets")
+
+# Ticket übersicht
+click getbytext("Meine Tickets")
+assertExists "Konnte die Ticket-Übersicht nicht laden!!" getbyxpath("//h1[text()[contains(.,'Meine Tickets')]]")
+set getbyid("ctrlTimeRangeList") to value "unlimited"
+click getbyid("SF_SUCHE")
+
+#Extraction
+extract getbyxpath("//table[@id='berechtigungen']/tbody/tr") split by getbyxpath("td")
+
+# Logout
+open "https://handyticket.de/portals/web/nutzer/dvg/logout.flow?ALTLAYOUT=&LANG=de"
+assertExists "Loginwebseite nicht gefunden!" getbyxpath("//*[text()[contains(.,'PIN vergessen')]]")

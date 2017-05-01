@@ -1,0 +1,24 @@
+<form>
+<p>
+<b>Tages-/Festgeldkonten</b><br/>
+<a href="barclays">Barclays Bank</a><br/>
+<a href="varenhold">Varengold</a><br/>
+<br/><br/>
+
+
+<b>Bonusprogramme</b><br/>
+<a href="payback">Payback</a><br/>
+<a href="bahnbonus">Deutsche Bahn: bahn.bonus</a><br/>
+<br/><br/>
+
+<b>Kreditkarten</b><br/>
+<a href="airplus">Airplus</a><br/>
+<br/><br/>
+
+<b>Sonstiges</b><br/>
+<a href="handyticket">HandyTicket Deutschland</a><br/>
+<br/><br/>
+
+</p>
+<!-- Action: de.willuhn.jameica.hbci.gui.action.KontoNew -->
+</form>

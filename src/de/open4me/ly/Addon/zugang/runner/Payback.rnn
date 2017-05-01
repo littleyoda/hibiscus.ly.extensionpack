@@ -1,0 +1,25 @@
+cfg javascript=false
+cfg css=false
+
+# Hauptseite
+open "https://www.payback.de/"
+click getbyxpath("//a[text()[contains(.,'Login')]]")
+assertExists "Loginseite nicht gefunden!" getbyxpath("//*[text()[contains(.,'Jetzt einloggen')]]")
+
+# Login
+set getbyxpath("//input[@id='aliasInputSecure']") to value "${userid}"
+set getbyxpath("//input[@id='passwordInput']") to value "${pwd}"
+click getbyxpath("//input[@id='loginSubmitButtonSecure']")
+assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Ihre letzten Aktionen')]]")
+
+# Extract Umsätze
+click getbyxpath("//a[contains(@href,'punktekonto')]")
+assertExists "Umsätzliste nicht gefunden!" getbyxpath("//*[text()[contains(.,'Ihre Umsätze')]]")
+extract getbyxpath("//table[@class='mypoints']/tbody/tr") split by getbyxpath(".//td")
+
+# Extract Saldo
+extract getbyxpath("//span[@id='serverPoints']") split by getbyxpath(".")
+
+# Logout
+click getbyxpath("//a[contains(@href,'logout')]")
+assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'AUSGELOGGT')]]")

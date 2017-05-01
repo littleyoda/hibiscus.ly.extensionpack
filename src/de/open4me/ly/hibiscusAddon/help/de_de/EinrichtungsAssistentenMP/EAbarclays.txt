@@ -1,0 +1,16 @@
+<form>
+<p>
+Bitte füllen sie die folgenden Felder aus:<br/>
+<br/>
+<b>Kontoinhaber:</b> &lt;Ihr Name&gt;<br/>
+<br/>
+<b>Kundenkennung:</b> &lt;Der 12-stellige Login Code, der auf der Webseite genutzt wird&gt;<br/>
+<b>Kontonummer:</b> &lt;Kontonummer ihres Tages- oder Festgeldkonto&gt;<br/>
+<b>Bankleitzahl:</b> 0<br/>
+<b>Unterkontonummer:</b> Barclay<br/>
+<b>Zugangsweg:</b> XXXX<br/>
+<b>Vefahren:</b> &lt;Nichts auswählen&gt;<br/> 
+<br/>
+Alle weiteren Feld können und sollten unausgefüllt bleiben.
+</p>
+</form>

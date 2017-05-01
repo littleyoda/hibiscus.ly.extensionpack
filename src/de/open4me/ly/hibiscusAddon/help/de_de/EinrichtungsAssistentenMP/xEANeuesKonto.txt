@@ -1,0 +1,14 @@
+<form>
+<p>
+Im nächsten Schritt können sie ein neues Konto anlegen:<br/>
+<a href="NeuesKonto">Neues Konto anlegen</a><br/>
+<br/>
+Falls sie vorher eins der folgenden Plugin genutzt haben:<br/>
+Airplus Plugin<br/>
+Bahn.Bonus Plugin<br/>
+BarclaysBank Plugin<br/>
+<a href="Migration">Plugin für bestehendes Konto ändern</a><br/>
+</p>
+
+<!-- Action: de.willuhn.jameica.hbci.gui.action.KontoNew -->
+</form>
