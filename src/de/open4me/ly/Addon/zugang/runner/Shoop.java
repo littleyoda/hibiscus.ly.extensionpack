@@ -37,7 +37,7 @@ public class Shoop extends BaseZugangRunner {
 				// 12 Shoop.de Auszahlungsnummer	13 Nachbuchungsanfrage
 				Umsaetze u = new Umsaetze();
 				u.setBuchung(df.parse(line.get(7)));
-				String art = line.get(3);
+				String art = line.get(3).toLowerCase();
 				if (art.equals("bezahlt") || art.equals("verfügbar")) {
 					if (line.get(10) == null) {
 						// Behandlung von Sonderfällen
@@ -48,6 +48,12 @@ public class Shoop extends BaseZugangRunner {
 				} else if (art.equals("erfasst")) {
 					u.setVorgemerkt(true);
 					u.setWertstellung(df.parse(line.get(7)));
+				} else if (art.equals("erinnerung")) {
+					// Ignore
+					continue;
+				} else if (art.equals("abgelehnt")) {
+					// Ignore
+					continue;
 				} else {
 					throw new IllegalStateException("Unbekannter Type: " + art);
 				}

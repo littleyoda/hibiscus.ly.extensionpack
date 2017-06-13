@@ -112,21 +112,31 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 				oldest = umsatz.getDatum();
 		}
 
-
 		// Wir holen uns die Umsaetze seit dem letzen Abruf von der Datenbank
 		GenericIterator<Umsatz> existing = konto.getUmsaetze(oldest,null);
+
+		// Liste der vorgemerkte Buchungen
+		// Diese müssen, falls sie nicht mehr vorgemerkt sind, gelöscht werden
+		List<Umsatz> vorgemerkte = entferneVorgemerkteBuchungen(existing);
+
 		
-		entferneVorgemerkteBuchungen(existing);
-		
+		// Umsätze ggf. hinzufügen
 		for (Umsatz umsatz:fetched) {
 			if (existing.contains(umsatz) != null) {
+				vorgemerkte.remove(umsatz);
 				continue;
 			}
 			if (check(existing, umsatz)) {
+				vorgemerkte.remove(umsatz);
 				continue;
 			}
 			umsatz.store();
 			Application.getMessagingFactory().sendMessage(new ImportMessage(umsatz));
+		}
+		
+		// Alle alten vorgemerkte Umsätze löschen
+		for (Umsatz x: vorgemerkte) {
+			x.delete();
 		}
 	}
 
@@ -206,7 +216,7 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 		return false;
 	}
 
-	private void entferneVorgemerkteBuchungen(GenericIterator<Umsatz> existing)
+	private List<Umsatz> entferneVorgemerkteBuchungen(GenericIterator<Umsatz> existing)
 			throws RemoteException, ApplicationException {
 		List<Umsatz> ungebuchteUmsaetze = new ArrayList<Umsatz>();
 		existing.begin();
@@ -216,9 +226,7 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 				ungebuchteUmsaetze.add(x);
 			}
 		}
-		for (Umsatz u : ungebuchteUmsaetze) {
-			u.delete();
-		}
+		return ungebuchteUmsaetze;
 	}
 
 	private String getVerwendung(Umsatz u) throws RemoteException {

@@ -6,6 +6,9 @@ open "https://www.shoop.de/"
 click getbyxpath("//a[text()[contains(.,'Einloggen')]]")
 set getbyid("user_email") to value "${userid}"
 set getbyid("user_pass") to value "${pwd}"
+assertExists "Login fehlgeschlagen!" getbyxpath("//button[text()[contains(.,'Login')]]")
+
+
 click getbyxpath("//button[text()[contains(.,'Login')]]")
 
 # CSV Download

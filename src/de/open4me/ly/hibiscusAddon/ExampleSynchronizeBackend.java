@@ -136,7 +136,7 @@ public class ExampleSynchronizeBackend extends AbstractSynchronizeBackend<Synchr
 	@Override
 	public String getName()
 	{
-		return "Diverse Addons";
+		return "Konten Erweiterungspack";
 	}
 
 	/**

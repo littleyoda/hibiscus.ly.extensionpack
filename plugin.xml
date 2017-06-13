@@ -5,7 +5,8 @@
         xsi:schemaLocation="http://www.willuhn.de/schema/jameica-plugin http://www.willuhn.de/schema/jameica-plugin-1.2.xsd"
         name="hibiscus.ly.extensionpack" version="0.0.1" class="de.open4me.ly.hibiscusAddon.Plugin" > 
 
-  <description>Hibiscus-Support für diverse Anbieter (Varengold, Handyticket)</description>
+  <description>Hibiscus-Support für diverse Anbieter 
+(Varengold, Airplus, BahnBonus, Barclays, BahnBonusHandyticket, Payback, Shoop)</description>
   <url></url>
   <homepage></homepage>
   <license></license>
@@ -17,14 +18,13 @@
   </requires>
 
   <classfinder>
-    <include>hibiscus\.ly\.addon\.jar</include>
+    <include>hibiscus\.ly\.extensionpack\.jar</include>
     <include>.*\.class</include>
   </classfinder>
 
   <menu>
     <item id="ly.megapack.menu" name="Extension Pack">
         <item id="ly.megapack.menu.einrichtugnsass" name="&amp;Einrichtungsassistenten..."       
-        		shortcut="ALT+E"
         		action="de.open4me.ly.hibiscusAddon.actions.EinrichtungsassistentenAction" />
       <item name="-" />
     </item>
