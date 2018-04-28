@@ -1,0 +1,29 @@
+engine chromedriver
+
+open "https://portal.airplus.com/"
+
+
+set getbyxpath("//input[@name='userLoginname']") to value "${username}"
+set getbyxpath("//input[@name='password']") to value "${pwd}"
+
+click getbyxpath("//button[@name='btnLogin']") 
+assertNotExists "Login fehlgeschlagen. Zugangsdaten falsch?" getbyxpath("//*[text()[contains(.,'Ihre Anmeldung war nicht erfolgreich')]]")
+
+click getbytext("Startseite")
+
+click getbytext("Online-Kartenkonto")
+
+assertExists "Kartennummer auf der Webseite nicht gefunden" getbyxpath("//*[text()[contains(.,'${userid}')]]")
+click getbyxpath("//*[text()[contains(.,'${userid}')]]")
+
+click getbyxpath("//input[@id='opArt2']") 
+click getbyxpath("//button[@type='submit']") 
+click getbyid("export")
+download getbyxpath("//form[@name='exports']") charset "UTF-8"
+
+closewindow
+
+click getbyxpath("//input[@id='opArt1']") 
+click getbyxpath("//button[@type='submit']") 
+click getbyid("export")
+download getbyxpath("//form[@name='exports']") charset "UTF-8"
