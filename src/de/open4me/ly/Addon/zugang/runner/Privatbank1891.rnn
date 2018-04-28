@@ -1,0 +1,24 @@
+engine htmlunit
+cfg javascript=true
+cfg language=de-DE
+fix dh4096
+
+open "https://www.privatbank1891.com/"
+open "https://banking.privatbank1891.com/ptlweb/WebPortal?bankid=7806"
+assertExists "Login-Webseite konnte nicht geladen werden!" getbyxpath("//*[text()[contains(.,'Login')]]")
+
+set getbyxpath("//input[contains(@id,'vrkennungalias')]") to value "${userid}"
+set getbyxpath("//input[contains(@id,'pin')]") to value "${pwd}"
+click getbyxpath("//button[contains(@id,'button_login')]")
+assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Finanzübersicht')]]")
+
+extract getbyxpath("//a[contains(.,'${nummer}')]/../..") split by getbyxpath("td")
+click getbyxpath("//a[contains(.,'${nummer}')]")
+click getbyxpath("//a[contains(.,'Umsatzexport')]")
+
+set getbyid("von_datum") to value "01.01.2010"
+set getbyid("bis_datum") to value "01.01.2020"
+
+download getbyxpath("//button[@value='Exportieren']") charset "ISO-8859-15"
+
+click getbyxpath("//a[contains(.,'Logout')]")
