@@ -1,4 +1,4 @@
-engine phantomjsdriver
+engine chromedriver
 cfg language=de-DE
 
 # Login

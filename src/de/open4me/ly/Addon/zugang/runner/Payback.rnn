@@ -9,8 +9,8 @@ assertExists "Loginseite nicht gefunden!" getbyxpath("//*[text()[contains(.,'Jet
 # Login
 set getbyxpath("//input[@id='aliasInputSecure']") to value "${userid}"
 set getbyxpath("//input[@id='passwordInput']") to value "${pwd}"
-click getbyxpath("//input[@id='loginSubmitButtonSecure']")
-assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Ihre letzten Aktionen')]]")
+click getbyxpath("//button[@id='loginSubmitButtonSecure']")
+assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Willkommen ')]]")
 
 # Extract Umsätze
 click getbyxpath("//a[contains(@href,'punktekonto')]")

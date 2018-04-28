@@ -49,7 +49,7 @@ public class Payback extends BaseZugangRunner {
 		
 		csv = new CsvListReader(new StringReader(r.getDownloads().get(1).toString()), CsvPreference.STANDARD_PREFERENCE);
 		line = csv.read();
-		setSaldo(ToolKitUtils.betrag2BigDecimal(line.get(1), "de", "DE").divide(new BigDecimal(100)));
+		setSaldo(ToolKitUtils.betrag2BigDecimal(line.get(1)).divide(new BigDecimal(100)));
 
 		csv.close();
 		

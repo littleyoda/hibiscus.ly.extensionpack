@@ -1,14 +1,15 @@
 #Varengold
 cfg javascript=true
+cfg language=DE
 
 #Login
-open "http://www.varengold.de/de/kontakt/kundenservice-fuer-privatkunden/vielen-dank/login-online-banking/"
-assertExists "Konnte die Login-Webseite nicht laden!" getbyxpath("//h1[text()[contains(.,'Online banking login')]]")
+open "https://www.varengold.de/de/kontakt/kundenservice-fuer-privatkunden/vielen-dank/login-online-banking/"
+assertExists "Konnte die Login-Webseite nicht laden!" getbyxpath("//h1[text()[contains(.,'Anmeldung Online')]]")
 
 set getbyxpath("//input[contains(@id,'benutzerkennung')]") to value "${userid}"
 set getbyxpath("//input[contains(@id,'pass')]") to value "${pwd}"
 click getbyxpath("//input[contains(@id,'submitButtonId')]")
-assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Timeout at')]]")
+assertExists "Login fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Timeout um')]]")
 
 # Account Übersicht
 click getbyxpath("//a[contains(@href,'accountlist')]")
@@ -23,4 +24,4 @@ extract getbyxpath("//table[@class='dataTable']/tbody/tr") split by getbyxpath("
 
 # Logout
 click getbyxpath("//a[contains(@href,'logout')]")
-assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'You have successfully logged out.')]]")
+assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Sie haben sich erfolgreich abgemeldet.')]]")

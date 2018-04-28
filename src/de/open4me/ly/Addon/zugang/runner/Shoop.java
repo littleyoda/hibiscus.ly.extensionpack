@@ -27,7 +27,6 @@ public class Shoop extends BaseZugangRunner {
 		List<String> line;
 		line = csv.read(); // Skip first Line
 		while ((line = csv.read()) != null) {
-			System.out.println(line + " " + line.size());
 			try {
 				// 0 Shoop.de-Transaktions ID	
 				// 1 Händler	2 Bestell-Referenz	3 Status	

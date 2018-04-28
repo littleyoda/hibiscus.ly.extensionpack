@@ -66,9 +66,8 @@ public class Varengold extends BaseZugangRunner {
 				u.setBuchungstext(buchungstext);
 
 				String[] betragWaehrung = line.get(5).trim().split(" ");
-				u.setBetrag(ToolKitUtils.betrag2BigDecimal(betragWaehrung[0], "en", "US"));
+				u.setBetrag(ToolKitUtils.betrag2BigDecimal(betragWaehrung[0]));
 				umsatzliste.add(u);
-				System.out.println(u);
 			} catch (ParseException e) {
 				System.out.println(line);
 				// TODO Auto-generated catch block

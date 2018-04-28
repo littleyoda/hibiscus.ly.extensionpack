@@ -19,5 +19,5 @@ click getbyid("SF_SUCHE")
 extract getbyxpath("//table[@id='berechtigungen']/tbody/tr") split by getbyxpath("td")
 
 # Logout
-open "https://handyticket.de/portals/web/nutzer/dvg/logout.flow?ALTLAYOUT=&LANG=de"
-assertExists "Loginwebseite nicht gefunden!" getbyxpath("//*[text()[contains(.,'PIN vergessen')]]")
+click getbytext("Logout")
+#assertExists "Loginwebseite nicht gefunden!" getbyxpath("//*[text()[contains(.,'PIN vergessen')]]")

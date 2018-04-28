@@ -35,7 +35,7 @@ public class Handyticket extends BaseZugangRunner {
 				u.setBuchungstext(buchungstext);
 
 				String[] betragWaehrung = line.get(5).trim().split(" ");
-				u.setBetrag(ToolKitUtils.betrag2BigDecimal(betragWaehrung[0], "en", "US"));
+				u.setBetrag(ToolKitUtils.betrag2BigDecimal(betragWaehrung[0], "de", "DE"));
 				umsatzliste.add(u);
 			} catch (ParseException e) {
 				System.out.println(line);
