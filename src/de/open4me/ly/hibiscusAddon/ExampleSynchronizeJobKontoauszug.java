@@ -252,6 +252,9 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 			//			newUmsatz.setSaldo(); // Zwischensaldo
 			newUmsatz.setValuta(f.getWertstellung());
 			newUmsatz.setWeitereVerwendungszwecke(Utils.parse(f.getBuchungstext()));
+			if (f.getSaldo() != null) {
+				newUmsatz.setSaldo(f.getSaldo().doubleValue());
+			}
 			if (f.isVorgemerkt()) {
 				newUmsatz.setFlags(Umsatz.FLAG_NOTBOOKED);
 				newUmsatz.setSaldo(0.0d);

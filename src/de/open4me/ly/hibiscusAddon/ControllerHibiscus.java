@@ -91,7 +91,7 @@ public class ControllerHibiscus implements Controller {
 	@Override
 	public void notifyUser(String string) {
 		try {
-			Application.getCallback().notifyUser("Aufgrund von Wartungsarbeiten ist bei der Barclays Bank z.Z. kein Abruf von Kontoinformationen möglich.");
+			Application.getCallback().notifyUser(string);
 		} catch (Exception e) {
 			log(Level.SEVERE, e.getMessage());
 		}

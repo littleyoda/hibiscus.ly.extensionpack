@@ -13,6 +13,7 @@ public class Umsaetze {
 	private boolean vorgemerkt = false;
 	
 	private BigDecimal betrag;
+	private BigDecimal saldo;
 	@Override
 	public String toString() {
 		return "Umsaetze [wertstellung=" + wertstellung + ", buchung=" + buchungDatum + ", buchungstext=" + buchungstext
@@ -59,6 +60,12 @@ public class Umsaetze {
 	}
 	public void setVorgemerkt(boolean vorgemerkt) {
 		this.vorgemerkt = vorgemerkt;
+	}
+	public BigDecimal getSaldo() {
+		return saldo;
+	}
+	public void setSaldo(BigDecimal saldo) {
+		this.saldo = saldo;
 	}
 	
 }
