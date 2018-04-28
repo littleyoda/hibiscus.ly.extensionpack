@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import de.open4me.ly.Addon.interfaces.PropertyElement;
 import de.open4me.ly.Addon.zugang.BaseZugang;
@@ -63,4 +64,44 @@ public class Utils {
 			info.put(x.getHashname(), konto.getMeta(x.getDescription(), null));
 		}
 	}
+	
+	public static ArrayList<HashMap<String, String>> parseCSV(String csv, String search) {
+		ArrayList<HashMap<String, String>> liste = new ArrayList<HashMap<String, String>>();
+		Scanner scanner = new Scanner(csv);
+		String[] header = null;
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			if (header == null) {
+				if (!line.startsWith(search)) {
+					continue;
+				}
+				header = line.replace(";;", ";_;").split(";"); // Handle empty Header
+				String pre = "";
+				int nr = 1;
+				for (int i = 0; i < header.length; i++) {
+					//					System.out.print(header[i]);
+					header[i] = header[i].toLowerCase();
+					String orig = header[i];
+					if (header[i].trim().equals("_") || header[i].trim().isEmpty()) {
+						header[i] = pre + nr;
+					} else {
+						nr = 1;
+					}
+					pre = orig;
+					//				System.out.println("  =>  " + header[i]);
+				}
+				continue;
+			}
+			HashMap<String, String> infos = new HashMap<String, String>();
+			String[] data = line.split(";");
+			for (int i = 0; i < data.length; i++) {
+				infos.put(header[i], data[i]);
+			}
+			liste.add(infos);
+		}
+		scanner.close();
+		return liste;
+
+	}
+	
 }
