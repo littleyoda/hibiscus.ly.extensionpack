@@ -27,3 +27,10 @@ click getbyxpath("//input[@id='opArt1']")
 click getbyxpath("//button[@type='submit']") 
 click getbyid("export")
 download getbyxpath("//form[@name='exports']") charset "UTF-8"
+
+closewindow
+
+click getbyxpath("//a[@class='logout-icon']")
+assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Sie wurden erfolgreich abgemeldet')]]")
+
+ 

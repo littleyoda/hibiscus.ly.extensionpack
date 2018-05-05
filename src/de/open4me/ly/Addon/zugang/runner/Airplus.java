@@ -13,15 +13,12 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.gargoylesoftware.htmlunit.Page;
-
 import de.open4me.ly.Addon.interfaces.PropertyElement;
 import de.open4me.ly.Addon.interfaces.Umsaetze;
 import de.open4me.ly.webscraper.utils.ToolKitUtils;
 
 public class Airplus extends BaseZugangRunner {
 
-	//#var kartennummer=553390 xxxxxx 7762
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
 	protected final static PropertyElement PROP_COMPANYNAME = new PropertyElement("AirPlus-Firmenname", "companyname").setEmptyAllowed();
@@ -31,8 +28,7 @@ public class Airplus extends BaseZugangRunner {
 	@Override
 	public void setInfo(HashMap<String, String> info) {
 		super.setInfo(info);
-		System.out.println(getInfo().entrySet().toString());
-		String userid = getInfo().get("userid");
+		String userid = getInfo().get("userid").replace(" ", "");
 		if (userid.length() != 16) {
 			
 		}
@@ -65,22 +61,18 @@ public class Airplus extends BaseZugangRunner {
 
 	@Override
 	protected void auswerten() throws IOException, ParseException {
-		for (Page x : r.getDownloads()) {
-			System.out.println(x.toString());
-			handle(x.toString());
-		}
+			handle(r.getDownloads().get(0).toString(), true);
+			handle(r.getDownloads().get(1).toString(), false);
 	}
 
-	private void handle(String text) throws ParseException {
+	private void handle(String text, boolean calcSaldo) throws ParseException {
+		BigDecimal saldo = BigDecimal.ZERO;
 		ArrayList<HashMap<String, String>> liste = parseCSV(text, "Kartennummer(n);Rechnung;");
 		for (HashMap<String, String> e : liste) {
 
 			Umsaetze newUmsatz = new Umsaetze();
-			System.out.println(e.keySet().toString());
-			System.out.println();
-			System.out.println(e.get("soll/haben"));
-			System.out.println(e.get("abgerechnet"));
 			BigDecimal betrag = ToolKitUtils.betrag2BigDecimal((e.get("soll/haben").equals("H")? "": "-") + e.get("abgerechnet"), "de", "DE");
+			saldo.add(betrag);
 			newUmsatz.setBetrag(betrag);
 			newUmsatz.setBuchung(df.parse(e.get("buch.datum")));
 			String verwendungszweck = e.get("leistungserbringer") + " " + e.get("leistungsbeschreibung");
@@ -93,12 +85,16 @@ public class Airplus extends BaseZugangRunner {
 			if (e.containsKey("auslandseinsatzentgelt wert")) {
 				newUmsatz = new Umsaetze();
 				betrag = ToolKitUtils.betrag2BigDecimal("-" + e.get("auslandseinsatzentgelt wert"), "de", "DE");
+				saldo.add(betrag);
 				newUmsatz.setBetrag(betrag);
 				newUmsatz.setBuchung(df.parse(e.get("buch.datum")));
 				newUmsatz.setBuchungstext(verwendungszweck + " " + "Auslandseinsatzentgelt");
 				newUmsatz.setWertstellung(df.parse(e.get("kaufdatum")));
 				getUmsatzliste().add(newUmsatz);
 			}
+		}
+		if (calcSaldo) {
+			setSaldo(saldo);
 		}
 	}
 
@@ -119,6 +115,7 @@ public class Airplus extends BaseZugangRunner {
 				}
 				header = line.replace(";;", ";_;").split(";");
 				String pre = "";
+				// Create Unique Header Names
 				int nr = 1;
 				for (int i = 0; i < header.length; i++) {
 					String name = header[i].toLowerCase(); 
@@ -138,7 +135,6 @@ public class Airplus extends BaseZugangRunner {
 			HashMap<String, String> infos = new HashMap<String, String>();
 			String[] data = line.split(";");
 			for (int i = 0; i < data.length; i++) {
-				System.out.println(header[i] + " = > " + data[i]);
 				infos.put(header[i], data[i]);
 			}
 			liste.add(infos);
