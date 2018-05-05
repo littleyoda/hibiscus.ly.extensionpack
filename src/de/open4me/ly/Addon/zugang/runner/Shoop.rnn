@@ -21,5 +21,5 @@ downloadfromurl https://www.shoop.de/my/transactions.php?csv=true
 extract getbyxpath("//p[@id='my_balance']") split by getbyxpath(".")
 
 # Logout
-click getbyxpath("//a[text()[contains(.,'Ausloggen')]]")
+open "https://www.shoop.de/login.php?logout"
 assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Logoutvorgang abgeschlossen')]]")
