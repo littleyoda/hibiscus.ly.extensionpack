@@ -46,9 +46,6 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 	@Override
 	public void execute() throws Exception
 	{
-		Runner r = new Runner() {
-
-		};
 		caching = Settings.getCachePin();
 		if (!caching) {
 			storedValues.clear();
@@ -57,15 +54,14 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 		Konto konto = (Konto) this.getContext(CTX_ENTITY); // wurde von ExampleSynchronizeJobProviderKontoauszug dort abgelegt
 		BaseZugang v = null;
 		try {
-
-			System.out.println("Cached: "  + Settings.getCachePin() + " Store: " + Settings.getStorePin());
+			Logger.debug("Cached: "  + Settings.getCachePin() + " Store: " + Settings.getStorePin());
 			Logger.info("Rufe Umsätze/Saldo ab für " + backend.getName());
 
 			HashMap<String, String> info = Utils.getKontoInformationen(konto);
 
 			v = ZugangsFabrik.getZugang(info, ControllerHibiscus.getInstance());
 			if (v == null) {
-				throw new ApplicationException(i18n.tr("Konto dieses Konto keinem Anbieter zuordnen!"));
+				throw new ApplicationException(i18n.tr("Konnte dieses Konto keinem Anbieter zuordnen!"));
 			}
 			Logger.info("Genutzer Zugang: " + v.getName());
 			Utils.addProperties(info, v, konto);
@@ -84,18 +80,6 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 			Application.getMessagingFactory().sendMessage(new SaldoMessage(konto));
 		} catch (Exception e) {
 			resetPwd(konto, v);
-//			int i = 0;
-//			for (ResultSets x : r.getResults()) {
-//				if (x != null && x.page != null) {
-//					System.out.println(i + ": " + x.page.toString());
-//					if (x.page instanceof HtmlPage) {
-//						HtmlPage hp = (HtmlPage) x.page;
-//						System.out.println(hp.toString());
-//						System.out.println(hp.asText());
-//					}
-//				}
-//				i++;
-//			}
 			e.printStackTrace();
 			throw new ApplicationException("Ein Fehler ist aufgetreten: " + e.toString());
 		}
@@ -192,8 +176,6 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 					info.put(x.getHashname(), value);
 				}
 			}
-			
-			// TODO Check for empty values
 		}
 	}
 
