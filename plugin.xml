@@ -3,11 +3,11 @@
 <plugin xmlns="http://www.willuhn.de/schema/jameica-plugin"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.willuhn.de/schema/jameica-plugin http://www.willuhn.de/schema/jameica-plugin-1.2.xsd"
-        name="hibiscus.ly.extensionpack" version="0.0.1" class="de.open4me.ly.hibiscusAddon.Plugin" > 
+        name="hibiscus.ly.extensionpack" version="1.0.1" class="de.open4me.ly.hibiscusAddon.Plugin" > 
 
   <description>Hibiscus-Support für diverse Anbieter 
 (Varengold, Airplus, BahnBonus, Barclays, BahnBonus, Handyticket, Payback, Shoop)</description>
-  <url></url>
+  <url>http://www.open4me.de/hibiscus/hibiscus.ly.extensionpack/hibiscus.ly.extensionpack.zip</url>
   <homepage></homepage>
   <license></license>
 
