@@ -3,23 +3,23 @@ cfg language=de-DE
 
 # Login
 open "https://www.shoop.de/"
-click getbyxpath("//a[text()[contains(.,'Einloggen')]]")
-set getbyid("user_email") to value "${userid}"
-set getbyid("user_pass") to value "${pwd}"
-assertExists "Login fehlgeschlagen!" getbyxpath("//button[text()[contains(.,'Login')]]")
+click getbyxpath("//span[text()[contains(.,'Anmelden')]]")
+set getbyid("mat-input-0") to value "${userid}"
+set getbyid("mat-input-1") to value "${pwd}"
+click getbyxpath("//button[contains(@class,'submit-btn')]")
+#assertExists "Login fehlgeschlagen!" getbyxpath("//button[text()[contains(.,'Anmelden')]]")
 
 
-click getbyxpath("//button[text()[contains(.,'Login')]]")
 
 # CSV Download
-#click getbyxpath("//a[text()[contains(.,'Aktivitäten')]]")
-#click getbyxpath("//a[text()[contains(.,'Zeige alle Transaktionen')]]")
-downloadfromurl https://www.shoop.de/my/transactions.php?csv=true
-
+open "https://www.shoop.de/aktivitaeten/einkaeufe"
+click getbyxpath("//mat-icon[contains(@svgicon,'cross')]")
+click getbyxpath("//div[text()[contains(.,'als CSV')]]")
+download download_Directory 
 
 # Extract Saldo
-extract getbyxpath("//p[@id='my_balance']") split by getbyxpath(".")
+extract getbyxpath("//div[contains(@class,'balance ')]") split by getbyxpath(".")
 
 # Logout
-open "https://www.shoop.de/login.php?logout"
-assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Logoutvorgang abgeschlossen')]]")
+#open "https://www.shoop.de/login.php?logout"
+#assertExists "Logout fehlgeschlagen!" getbyxpath("//*[text()[contains(.,'Logoutvorgang abgeschlossen')]]")
