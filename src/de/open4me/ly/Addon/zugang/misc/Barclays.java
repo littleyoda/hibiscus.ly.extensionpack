@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -148,8 +149,7 @@ public class Barclays extends BaseZugang {
 				page = (page.getAnchorByText("" + pagenr)).click();
 			} 
 		} catch (ElementNotFoundException e) {
-			System.out.println("Page " + pagenr + " nicht gefunden!");
-
+			getController().log(Level.INFO, "Page " + pagenr + " nicht gefunden!");
 		}
 		webClient.close();
 	}
