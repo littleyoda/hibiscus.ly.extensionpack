@@ -1,6 +1,7 @@
 package de.open4me.ly.Addon.interfaces;
 
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.logging.Level;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -14,6 +15,8 @@ public interface Controller {
 		public void log(Level info, String string);
 
 		public void notifyUser(String string);
+
+		public void log(Exception e);
 
 
 }

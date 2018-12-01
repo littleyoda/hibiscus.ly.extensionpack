@@ -97,4 +97,9 @@ public class ControllerHibiscus implements Controller {
 		}
 	}
 
+	@Override
+	public void log(Exception e) {
+		// TODO
+	}
+
 }

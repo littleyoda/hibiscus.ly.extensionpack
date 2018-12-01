@@ -80,7 +80,7 @@ public class ExampleSynchronizeJobKontoauszug extends SynchronizeJobKontoauszug 
 			Application.getMessagingFactory().sendMessage(new SaldoMessage(konto));
 		} catch (Exception e) {
 			resetPwd(konto, v);
-			e.printStackTrace();
+			Logger.error("Fehler ist aufgetreten", e);
 			throw new ApplicationException("Ein Fehler ist aufgetreten: " + e.toString());
 		}
 	}

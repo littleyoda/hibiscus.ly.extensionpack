@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.supercsv.io.CsvListReader;
 import org.supercsv.prefs.CsvPreference;
@@ -38,8 +39,8 @@ public class Handyticket extends BaseZugangRunner {
 				u.setBetrag(ToolKitUtils.betrag2BigDecimal(betragWaehrung[0], "de", "DE"));
 				umsatzliste.add(u);
 			} catch (ParseException e) {
-				System.out.println(line);
-				e.printStackTrace();
+				getController().log(Level.SEVERE, "Kann folgende Zeile nicht auswerten: " + line);
+				getController().log(e);
 				throw e;
 			}
 		}

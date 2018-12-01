@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.supercsv.exception.SuperCsvException;
 import org.supercsv.io.CsvListReader;
@@ -55,8 +56,8 @@ public class Privatbank1891 extends BaseZugangRunner {
 					u.setBetrag(ToolKitUtils.betrag2BigDecimal(line.get("Betrag"), "de", "DE"));
 					umsatzliste.add(u);
 				} catch (ParseException e) {
-					System.out.println(line);
-					e.printStackTrace();
+					getController().log(Level.SEVERE, "Kann folgende Zeile nicht auswerten: " + line);
+					getController().log(e);
 					throw e;
 				}
 			}

@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,9 +70,9 @@ public class Varengold extends BaseZugangRunner {
 				u.setBetrag(ToolKitUtils.betrag2BigDecimal(betragWaehrung[0]));
 				umsatzliste.add(u);
 			} catch (ParseException e) {
-				System.out.println(line);
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				getController().log(Level.SEVERE, "Kann folgende Zeile nicht auswerten: " + line);
+				getController().log(e);
+				throw e;
 			}
 		}
 
